@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: SSH into Server
@@ -32,7 +32,8 @@ jobs:
             pnpm install
             echo "Build"
             pnpm run build
-            cp package.json build  
+            cp package.json build
+            npm i -g pm2
             if pm2 show itmohub >/dev/null; then
               echo "Reload"
               pm2 reload itmohub
