@@ -27,11 +27,11 @@ jobs:
             fi
             cd /var/www/itmohub
             git pull
-            npm install
-            npm ci --omit dev
-            npm run build
+            pnpm install
+            pnpm run build
+            cp package.json build  
             if pm2 show itmohub >/dev/null; then
               pm2 reload itmohub
             else
-              pm2 start build --name itmohub
+              pm2 start build/index.js --name itmohub
             fi
