@@ -35,3 +35,5 @@ jobs:
         SCRIPT_AFTER: |
           cd ${{ secrets.REMOTE_TARGET }}
           node build &
+          bg
+          disown -h
