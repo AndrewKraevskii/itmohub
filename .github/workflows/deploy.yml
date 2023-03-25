@@ -29,12 +29,9 @@ jobs:
         SOURCE: "/build"
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
-        TARGET: itmohub
-      
-    - name: Run site
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: echo "Start running" && cd ~/itmohub/ && node index.js
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        TARGET: ${{ secrets.REMOTE_TARGET }}
+        SCRIPT_BEFORE:
+          rm -rf ${{ secrets.REMOTE_TARGET }}
+        SCRIPT_AFTER: |
+          cd ${{ secrets.REMOTE_TARGET }}
+          node build/index.js
