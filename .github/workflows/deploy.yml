@@ -34,4 +34,4 @@ jobs:
           rm -rf ${{ secrets.REMOTE_TARGET }}
         SCRIPT_AFTER: |
           cd ${{ secrets.REMOTE_TARGET }}
-          node build
+          node build &
