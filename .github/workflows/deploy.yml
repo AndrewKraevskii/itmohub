@@ -18,18 +18,25 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "Check if git repo exist"
             if [ -d /var/www/itmohub/.git ]; then
+              echo "Pull changes"
               cd /var/www/itmohub
               git pull
             else
+              echo "Clone repo"
               git clone https://github.com/AndrewKraevskii/itmohub.git /var/www/itmohub
               cd /var/www/itmohub
             fi
+            echo "Install deps"
             pnpm install
+            echo "Build"
             pnpm run build
             cp package.json build  
             if pm2 show itmohub >/dev/null; then
+              echo "Reload"
               pm2 reload itmohub
             else
+              echo "Start"
               pm2 start build/index.js --name itmohub
             fi
