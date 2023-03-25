@@ -30,7 +30,11 @@ jobs:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         TARGET: itmohub
-        SCRIPT_AFTER: |
-          pwd
-          cd itmohub
-          node index.js
+      
+      - name: Run site
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: echo "Start running" && cd ~/itmohub/ && node index.js
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY}}
